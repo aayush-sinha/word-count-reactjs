@@ -11,17 +11,21 @@ function App() {
   const [isNoError, setNoError] = useState(false);
   const [isErrorNeg, setErrorNeg] = useState(false);
   const [wordlist, setWordList] = useState([]);
+  const [valuep, setvaluep] = useState();
 
   const handleSubmit = async (evt) => {
+    setVisible(false);
+    setNoError(false);
     setErrorBlank(false);
     setErrorNeg(false);
     evt.preventDefault();
     if (!value) {
       setErrorBlank(true);
+      return null;
     }
     if (value <= 0) {
       setErrorNeg(true);
-      value = 0;
+      return null;
     }
 
     var myHeaders = new Headers();
@@ -36,8 +40,10 @@ function App() {
       body: urlencoded,
       redirect: "follow",
     };
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const url = "https://murmuring-earth-05108.herokuapp.com/num";
+
     var result = await fetch(proxyurl + url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
@@ -46,9 +52,9 @@ function App() {
       .catch((error) => console.log("error", error));
     setWordList(result);
     setVisible(true);
-    if (!isErrorBlank && !isErrorNeg && isVisible) {
-      setNoError(true);
-    }
+
+    setvaluep(value);
+    setNoError(true);
   };
   return (
     <div className="App">
@@ -98,7 +104,7 @@ function App() {
         </div>
         {isNoError ? (
           <p>
-            <code>Showing top {value} words</code>
+            <code className="valuep">Showing top {valuep} words</code>
           </p>
         ) : (
           <p></p>

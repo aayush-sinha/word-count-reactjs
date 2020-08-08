@@ -16,8 +16,8 @@ function Words({ wordlist }) {
   });
   return (
     <>
-      <table class="table">
-        <thead class="thead-dark">
+      <table className="table">
+        <thead className="thead-dark">
           <tr>
             <th scope="col">Word</th>
             <th scope="col">frequency</th>
