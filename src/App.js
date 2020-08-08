@@ -29,7 +29,10 @@ function App() {
       redirect: "follow",
     };
 
-    var result = await fetch("http://localhost:5000/num", requestOptions)
+    var result = await fetch(
+      "https://murmuring-earth-05108.herokuapp.com/num",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => {
         return result;
