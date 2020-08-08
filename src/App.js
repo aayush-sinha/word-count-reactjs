@@ -28,11 +28,9 @@ function App() {
       body: urlencoded,
       redirect: "follow",
     };
-
-    var result = await fetch(
-      "https://murmuring-earth-05108.herokuapp.com/num",
-      requestOptions
-    )
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = "https://murmuring-earth-05108.herokuapp.com/num";
+    var result = await fetch(proxyurl + url, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         return result;
