@@ -8,6 +8,7 @@ function App() {
   const { value, bind, reset } = useInput("");
   const [isVisible, setVisible] = useState(false);
   const [isErrorBlank, setErrorBlank] = useState(false);
+  const [isNoError, setNoError] = useState(false);
   const [isErrorNeg, setErrorNeg] = useState(false);
   const [wordlist, setWordList] = useState([]);
 
@@ -20,6 +21,7 @@ function App() {
     }
     if (value <= 0) {
       setErrorNeg(true);
+      value = 0;
     }
 
     var myHeaders = new Headers();
@@ -44,6 +46,9 @@ function App() {
       .catch((error) => console.log("error", error));
     setWordList(result);
     setVisible(true);
+    if (!isErrorBlank && !isErrorNeg && isVisible) {
+      setNoError(true);
+    }
   };
   return (
     <div className="App">
@@ -91,6 +96,13 @@ function App() {
             </button>
           </form>
         </div>
+        {isNoError ? (
+          <p>
+            <code>Showing top {value} words</code>
+          </p>
+        ) : (
+          <p></p>
+        )}
       </header>
       {isVisible ? <Words wordlist={wordlist} /> : <p></p>}
     </div>
