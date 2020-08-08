@@ -7,10 +7,15 @@ import Words from "./Words";
 function App() {
   const { value, bind, reset } = useInput("");
   const [isVisible, setVisible] = useState(false);
+  const [isError, setError] = useState(false);
   const [wordlist, setWordList] = useState([]);
 
   const handleSubmit = async (evt) => {
+    setError(false);
     evt.preventDefault();
+    if (!value) {
+      setError(true);
+    }
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -60,6 +65,13 @@ function App() {
                 />
               </div>
             </div>
+            {isError ? (
+              <p>
+                <code>Field cannot be left empty</code>
+              </p>
+            ) : (
+              <p></p>
+            )}
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
