@@ -7,15 +7,21 @@ import Words from "./Words";
 function App() {
   const { value, bind, reset } = useInput("");
   const [isVisible, setVisible] = useState(false);
-  const [isError, setError] = useState(false);
+  const [isErrorBlank, setErrorBlank] = useState(false);
+  const [isErrorNeg, setErrorNeg] = useState(false);
   const [wordlist, setWordList] = useState([]);
 
   const handleSubmit = async (evt) => {
-    setError(false);
+    setErrorBlank(false);
+    setErrorNeg(false);
     evt.preventDefault();
     if (!value) {
-      setError(true);
+      setErrorBlank(true);
     }
+    if (value <= 0) {
+      setErrorNeg(true);
+    }
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -66,9 +72,16 @@ function App() {
                 />
               </div>
             </div>
-            {isError ? (
+            {isErrorBlank ? (
               <p>
                 <code>Field cannot be left empty</code>
+              </p>
+            ) : (
+              <p></p>
+            )}
+            {isErrorNeg ? (
+              <p>
+                <code>Number cannot be negative or 0</code>
               </p>
             ) : (
               <p></p>
